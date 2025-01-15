@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #e9e7e7;
+    padding: 20px 0;
+    border-bottom: 1px solid #afaeae;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Распределение элементов */
+    align-items: center; /* Вертикальное выравнивание */
+    max-width: 1200px; /* Максимальная ширина контейнера */
+    margin: 0 auto; /* Центрирование контейнера */
+    padding: 0 20px; /* Отступы от краев */
+}
+
+.header_admin {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.header_link {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Горизонтальное размещение элементов списка */
+    justify-content: center; /* Центрирование элементов списка */
+    flex-grow: 1; /* Позволяет списку занимать доступное пространство */
+}
+
+.header_link li {
+    margin: 0 30px; /* Отступы между элементами списка */
+}
+
+.header_link a {
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+    color: #333; /* Цвет текста ссылок */
+}
+
+.header_login {
+    text-decoration: none; /* Убираем подчеркивание ссылки "Выйти" */
+    color: #ff0000; /* Цвет текста ссылки "Выйти" */
+}
+.header_login:hover {
+    text-decoration: none; /* Убираем подчеркивание ссылки "Выйти" */
+    color: #860606; /* Цвет текста ссылки "Выйти" */
+}
+main {
+    padding: 30px 0; /* Отступы сверху и снизу для main */
+    background-color: #f9f9f9; /* Цвет фона для main */
+    width: 80%;
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    margin: 0 auto;
+}
+
+.filters .container {
+    max-width: 80%; /* Ширина контейнера в main - 80% от родителя */
+    margin: 0 auto; /* Центрирование контейнера внутри секции фильтров */
+}
+
+.filters label {
+    display: block; /* Блочный элемент для лейбла */
+    margin-bottom: 8px; /* Отступ снизу лейбла */
+    margin-top: 18px; 
+    font-weight: bold; /* Жирный шрифт для лейбла */
+}
+
+.filters input[type="text"],
+.filters select {
+    width: calc(100% - 22px); /* Учитываем отступы */
+    padding: 2px;
+    margin-top: 2px; /* Отступ сверху поля ввода/выбора */
+    border-radius: 4px;
+    border: 1px solid #828282; /* Граница поля ввода/выбора */
+}
+
+.filters input[type="text"]:focus,
+.filters select:focus {
+    border-color: #4CAF50; /* Цвет границы при фокусе */
+    outline: none; /* Убираем обводку при фокусе */
+}
+/* Стили для таблицы */
+.clients {
+    margin-top: 60px; /* Отступ сверху для секции клиентов */
+}
+
+.clients table {
+    width: 100%; /* Ширина таблицы 100% */
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+}
+
+.clients th,
+.clients td {
+    padding: 12px; /* Отступы внутри ячеек */
+    text-align: left; /* Выравнивание текста по левому краю */
+    border: 1px solid black; /* Нижняя граница ячеек */
+}
+
+.clients th {
+    background-color: #b3aeae; /* Цвет фона заголовков */
+    font-weight: bold; /* Жирный шрифт для заголовков */
+}
+
+.clients tr:hover {
+    background-color: #f1f1f1; /* Цвет фона строки при наведении */
+}
+
+.clients i {
+    cursor: pointer; /* Курсор в виде указателя на иконках */
+}
+
+.clients td i:hover {
+    color: #4CAF50; /* Цвет иконок при наведении */
+}
+.clients_title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+.clients_add{
+    position: sticky;
+    top: 16px; 
+    margin-left: 7%;
+}
+.clients_add:hover{
+    color: #4CAF50;
+}
+
