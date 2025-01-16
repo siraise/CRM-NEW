@@ -5,7 +5,7 @@ body {
 }
 
 .header {
-    background-color: #e9e7e7;
+    background-color: #c5c1c1;
     padding: 20px 0;
     border-bottom: 1px solid #afaeae;
 }
@@ -132,4 +132,38 @@ main {
 .clients_add:hover{
     color: #4CAF50;
 }
+.modal__content form {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
 
+.modal__content label {
+    margin-bottom: 5px;
+}
+
+.modal__content input {
+    border: 1px solid black;
+    border-radius: 8px; 
+    padding: 8px;
+    font-size: 16px;
+}
+.modal__content input:focus{
+    border-color: #4CAF50; /* Цвет границы при фокусе */
+    outline: none;
+}
+.modal__content button {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px; /* Отступ сверху */
+}
+.create{ 
+    background-color: #4CAF50;
+}
+.cancel{ 
+    background-color: #e9300f;
+}
