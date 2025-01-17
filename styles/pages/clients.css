@@ -167,3 +167,300 @@ main {
 .cancel{ 
     background-color: #e9300f;
 }
+.order .order_number{
+    color: black; 
+    font-weight: 900;
+}
+.order .order_total{
+    color: orange; 
+    font-weight: 800;
+}
+.order_items {
+    width: 100%; /* Ширина таблицы 100% */
+    margin-top: 15px;
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+}
+
+.order_items th,
+.order_items td {
+    padding: 12px; /* Отступы внутри ячеек */
+    text-align: left; /* Выравнивание текста по левому краю */
+    border: 1px solid black; /* Нижняя граница ячеек */
+}
+
+.order_items th {
+    background-color: #b3aeae; /* Цвет фона заголовков */
+    font-weight: bold; /* Жирный шрифт для заголовков */
+}
+
+.order_items tr:hover {
+    background-color: #f1f1f1; /* Цвет фона строки при наведении */
+}
+
+@media (max-width: 1400px ){
+    .clients_add{
+        margin-left: 0%;
+    }
+}
+@media (max-width: 992px ){
+    .container {
+        max-width: 960px;
+    }
+    .clients {
+        overflow-x: auto;
+    }
+
+    .clients table {
+        min-width: 900px;
+        font-size: 13px;
+    }
+
+    .clients th,
+    .clients td {
+        padding: 8px 10px;
+    }
+
+    .order_items {
+        min-width: 700px;
+    }
+}
+    
+@media (max-width: 768px ){
+    .container {
+        max-width: 720px;
+    }
+
+    .clients {
+        overflow-x: auto;
+        margin: 0 -15px;
+        padding: 0 15px;
+    }
+
+    .clients table {
+        min-width: 700px;
+        font-size: 12px;
+    }
+
+    .clients th,
+    .clients td {
+        padding: 8px;
+    }
+
+    .order_items {
+        min-width: 600px;
+    }
+
+    .order_items th,
+    .order_items td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .main__form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .main__form input {
+        width: 100%;
+    }
+
+    /* Модальные окна */
+    .modal__container {
+        width: 90%;
+        margin: 10px;
+        padding: 15px;
+    }
+
+    /* История покупок */
+    #history-modal .modal__content {
+        overflow-x: auto;
+    }
+
+    .order_items {
+        min-width: 600px;
+    }
+
+    .modal__form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal__btn {
+        width: 100%;
+    }
+
+    .modal__title {
+        font-size: 18px;
+    }
+
+    .modal__form-group input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 576px ){
+    .container {
+        max-width: 540px;
+        padding: 0 5px;
+    }
+
+    .clients {
+        margin: 0 -5px;
+        padding: 0 5px;
+    }
+
+    .clients table {
+        min-width: 320px;
+        font-size: 10px;
+    }
+
+    .clients th,
+    .clients td {
+        padding: 2px;
+        max-width: 40px;
+    }
+
+    .clients td:nth-child(1),
+    .clients th:nth-child(1) {
+        max-width: 20px;
+    }
+
+    .clients td:nth-child(2),
+    .clients th:nth-child(2) {
+        max-width: 60px;
+    }
+
+    .clients td:nth-child(3),
+    .clients th:nth-child(3) {
+        max-width: 70px;
+    }
+
+    .clients td:nth-child(4),
+    .clients th:nth-child(4) {
+        max-width: 65px;
+    }
+
+    .clients td:nth-child(5),
+    .clients th:nth-child(5),
+    .clients td:nth-child(6),
+    .clients th:nth-child(6) {
+        max-width: 45px;
+    }
+
+    .clients td:last-child,
+    .clients th:last-child {
+        max-width: 30px;
+    }
+
+    .clients td,
+    .clients th {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .clients td i {
+        font-size: 10px;
+        padding: 2px;
+    }
+
+    .clients thead th {
+        font-size: 9px;
+        font-weight: 600;
+        padding: 2px;
+    }
+
+    .header .container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .header_links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .clients_title {
+        font-size: 20px;
+    }
+
+    .modal__container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .modal__title {
+        font-size: 16px;
+    }
+
+    .main__form {
+        gap: 10px;
+    }
+
+    .main__form label {
+        font-size: 14px;
+    }
+
+    .main__form input,
+    .main__form select {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .order_items th,
+    .order_items td {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .clients {
+        margin: 0 -10px;
+        padding: 0 10px;
+    }
+
+    .clients table {
+        min-width: 400px;
+        font-size: 11px;
+    }
+
+    .clients th,
+    .clients td {
+        padding: 4px;
+    }
+
+    .clients td i {
+        font-size: 12px;
+    }
+
+    .order_items {
+        min-width: 300px;
+    }
+
+    .order_items th,
+    .order_items td {
+        padding: 4px;
+        font-size: 11px;
+    }
+
+    /* Улучшаем читаемость заголовков таблицы */
+    .clients thead th,
+    .order_items thead th {
+        white-space: nowrap;
+        font-weight: 600;
+        font-size: 10px;
+    }
+
+    /* Оптимизируем ширину колонок */
+    .clients td,
+    .clients th {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80px;
+    }
+}
+
+
