@@ -26,7 +26,6 @@ login-form
     display: block;
     font-weight: bold;
 }
-
 .container input[type="text"],
 .container input[type="password"] {
     width: calc(100% - 22px); /* Учитываем отступы */
@@ -53,4 +52,8 @@ login-form
 
 .container button:hover {
     background-color: #2d7e31;
+}
+.error{
+    color: red;
+    font-size: 12px;
 }
