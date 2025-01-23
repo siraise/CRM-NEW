@@ -1,5 +1,6 @@
 <?php session_start();
 
+
 if(isset($_GET['do']) && $_GET['do']==='logout'){
     require_once 'api/auth/LogoutUser.php';
     require_once 'api/DB.php';
@@ -27,7 +28,13 @@ AuthCheck('', 'login.php');
 <body>
     <header class="header">
         <div class="container">
-            <p class="header_admin">Фамилия Имя Отчество</p>
+            <p class="header_admin">
+                <?php
+                require 'api/DB.php';
+                require_once 'api/clients/AdminName.php';
+                echo AdminName($_SESSION['token'], $db);
+            
+            ?></p>
             <ul class="header_link">
                 <li><a href="">Клиенты</a></li>
                 <li><a href="">Товары</a></li>
@@ -69,284 +76,14 @@ AuthCheck('', 'login.php');
                         <th>Удалить</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td><i class="fa fa-book" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>Рубан Александр Дмитриевич </td>
-                            <td>alex@mail.ru</td>
-                            <td>89920093303</td>
-                            <td>9.03.2004</td>
-                            <td>15.08.2024</td>
-                            <td onclick="MicroModal.show('history-modal')"><i class="fa fa-book" aria-hidden="true"></i>
-                            </td>
-                            <td onclick="MicroModal.show('edit-modal')"><i class="fa fa-pencil" aria-hidden="true"></i>
-                            </td>
-                            <td onclick="MicroModal.show('delete-modal')"><i class="fa fa-trash" aria-hidden="true"></i>
-                            </td>
-                        </tr>
+                        <?php
+                        require 'api/DB.php';
+                        require_once 'api/clients/OutputClients.php';
+                        $clients = $db->query(
+                            "SELECT * FROM clients
+                        ")->fetchAll();
+                        OutputClients($clients);
+                        ?>
                     </tbody>
                 </table>
             </div>
