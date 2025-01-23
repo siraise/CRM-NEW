@@ -1,6 +1,11 @@
-<?php 
+<?php session_start();
 
-session_start();
+if(isset($_GET['do']) && $_GET['do']==='logout'){
+    require_once 'api/auth/LogoutUser.php';
+    require_once 'api/DB.php';
+    LogoutUser('login.php', $db, $_SESSION['token']);
+    exit;
+}
 require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
 
@@ -28,7 +33,7 @@ AuthCheck('', 'login.php');
                 <li><a href="">Товары</a></li>
                 <li><a href="">Заказы</a></li>
             </ul>
-            <a class="header_login" href="login.html">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <a class="header_login" href="?do=logout">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
             </a>
         </div>
     </header>
