@@ -1,9 +1,14 @@
-<?php 
+<?php session_start();
 
-session_start();
-require_once 'modules/AuthCheck.php';
+
+if(isset($_GET['do']) && $_GET['do']==='logout'){
+    require_once 'api/auth/LogoutUser.php';
+    require_once 'api/DB.php';
+    LogoutUser('login.php', $db, $_SESSION['token']);
+    exit;
+}
+require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
-
 
 ?>
 
@@ -23,11 +28,17 @@ AuthCheck('', 'login.php');
 <body>
     <header class="header">
         <div class="container">
-            <p class="header_admin">Фамилия Имя Отчество</p>
+            <p class="header_admin">
+                <?php
+                require 'api/DB.php';
+                require_once 'api/clients/AdminName.php';
+                echo AdminName($_SESSION['token'], $db);
+            
+            ?></p>
             <ul class="header_link">
-                <li><a href="">Клиенты</a></li>
-                <li><a href="">Товары</a></li>
-                <li><a href="">Заказы</a></li>
+            <li><a href="clients.php">Клиенты</a></li>
+                <li><a href="products.php">Товары</a></li>
+                <li><a href="orders.php">Заказы</a></li>
             </ul>
             <a class="header_login" href="login.html">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
             </a>
