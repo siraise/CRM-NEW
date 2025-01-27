@@ -47,14 +47,17 @@ AuthCheck('', 'login.php');
     <main>
         <section class="filters">
             <div class="container">
-                <form action="" class="main__form">
+                <form action="" method="GET" class="main__form">
                     <label for="search">Поиск по имени</label>
-                    <input type="text" id="search" name="search" placeholder="Введите имя" required>
+                    <input type="text" id="search" name="search" placeholder="Введите имя" >
                     <label for="search">Сортировка по имени</label>
                     <select name="sort" id="sort">
-                        <option value="0">По возрастанию</option>
-                        <option value="1">По убыванию</option>
+                        <option value="">По умолчанию</option>
+                        <option value="ASC">По возрастанию</option>
+                        <option value="DESC">По убыванию</option>
                     </select>
+                    <button type="submit">Поиск</button>
+                    <a href="?" >Сбросить</a>
                 </form>
             </div>
         </section>
@@ -79,9 +82,11 @@ AuthCheck('', 'login.php');
                         <?php
                         require 'api/DB.php';
                         require_once 'api/clients/OutputClients.php';
-                        $clients = $db->query(
-                            "SELECT * FROM clients
-                        ")->fetchAll();
+                        require_once 'api/clients/ClientsSearch.php';
+                        // $clients = $db->query(
+                        //     "SELECT * FROM clients
+                        // ")->fetchAll();
+                        $clients = ClientsSearch($_GET,$db);
                         OutputClients($clients);
                         ?>
                     </tbody>
@@ -100,18 +105,18 @@ AuthCheck('', 'login.php');
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <main class="modal__content" id="modal-1-content">
-                    <form id="registration-form">
+                    <form action="api/clients/AddClients.php" method="POST" id="registration-form">
                         <label for="full-name">ФИО:</label>
-                        <input type="text" id="full-name" name="full-name" required>
+                        <input type="text" id="full-name" name="full-name" >
 
                         <label for="email">Почта:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" >
 
                         <label for="phone">Телефон:</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <input type="tel" id="phone" name="phone" >
 
                         <label for="birth-date">День рождения:</label>
-                        <input type="date" id="birth-date" name="birth-date" required>
+                        <input type="date" id="birth-date" name="birth-date" >
 
                         <button class="create" type="submit">Создать</button>
                         <button onclick="MicroModal.close('add-modal')" class="cancel" type="button">Отмена</button>
@@ -212,7 +217,21 @@ AuthCheck('', 'login.php');
             </div>
         </div>
     </div>
-
+    <div class="modal micromodal-slide open" id="error-modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-1-title">
+                        Ошибка
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <main class="modal__content" id="modal-1-content">
+                    Текст ошибки
+                </main>
+            </div>
+        </div>
+    </div>
     <script defer src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
     <script defer src="scripts/initClientsModal.js"></script>
 </body>

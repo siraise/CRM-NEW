@@ -85,6 +85,19 @@ main {
     border-color: #4CAF50; /* Цвет границы при фокусе */
     outline: none; /* Убираем обводку при фокусе */
 }
+.filters button{
+    width: calc(100% - 22px);
+    background-color: #4CAF50;
+    padding: 10px;
+    color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+.filters button:hover{
+    background-color: #318534;
+}
 /* Стили для таблицы */
 .clients {
     margin-top: 60px; /* Отступ сверху для секции клиентов */
