@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Янв 13 2025 г., 05:01
+-- Время создания: Янв 29 2025 г., 06:31
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
   `birthday` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -41,7 +41,10 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`id`, `name`, `email`, `phone`, `birthday`, `created_at`) VALUES
-(1, 'Иванов Иван Иванович', 'ivan@mail.ru', '89930923732', '2002-01-08', '2024-01-12 08:20:22');
+(1, 'Ivan Ivanov', 'ivan.ivanov@example.com', '+79991234567', '1985-05-15', '2025-01-13 09:21:57'),
+(2, 'Maria Petrovna', 'maria.petrova@example.com', '+79991234568', '1990-07-20', '2025-01-13 09:21:57'),
+(3, 'Sergei Sidorov', 'sergey.sidorov@example.com', '+79991234569', '1988-03-30', '2025-01-13 09:21:57'),
+(4, 'ИльченкоСергей', 'dsf@mail.ru', '+79991237456', '2025-01-04', '2025-01-29 05:24:38');
 
 -- --------------------------------------------------------
 
@@ -53,8 +56,8 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `total` decimal(10,2) NOT NULL,
-  `status` enum('0','1') DEFAULT NULL
+  `total` decimal(10,2) DEFAULT NULL,
+  `status` enum('pending','completed','canceled') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -62,7 +65,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `client_id`, `order_date`, `total`, `status`) VALUES
-(1, 1, '2025-01-13 03:42:00', 1000.00, '1');
+(1, 1, '2025-01-13 09:25:36', 300.00, 'completed'),
+(2, 2, '2025-01-13 09:25:36', 150.50, 'pending'),
+(3, 1, '2025-01-13 09:25:36', 200.00, 'canceled');
 
 -- --------------------------------------------------------
 
@@ -83,7 +88,10 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
-(1, 1, 1, 1, 1000.00);
+(1, 1, 1, 2, 100.00),
+(2, 1, 2, 1, 150.50),
+(3, 2, 3, 1, 200.00),
+(4, 3, 4, 1, 250.75);
 
 -- --------------------------------------------------------
 
@@ -93,8 +101,8 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `desc` varchar(250) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -103,8 +111,11 @@ CREATE TABLE `products` (
 -- Дамп данных таблицы `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `desc`, `price`, `stock`) VALUES
-(1, 'футболка', 'хлопок', 1000.00, 700);
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `stock`) VALUES
+(1, 'Tovar 1', 'Opisanie tovara 1', 100.00, 50),
+(2, 'Tovar 2', 'Opisanie tovara 2', 150.50, 30),
+(3, 'Tovar 3', 'Opisanie tovara 3', 200.00, 20),
+(4, 'Tovar 4', 'Opisanie tovara 4', 250.75, 10);
 
 -- --------------------------------------------------------
 
@@ -114,17 +125,21 @@ INSERT INTO `products` (`id`, `name`, `desc`, `price`, `stock`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `surname` varchar(256) NOT NULL,
+  `token` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `name`) VALUES
-(1, 'log', '12345678', 'Смирнов Иван Александрович');
+INSERT INTO `users` (`id`, `login`, `password`, `name`, `surname`, `token`) VALUES
+(1, 'admin', 'admin123', 'Administrator', 'kitchen', 'bG9naW49J2FkbWluJyZwYXNzd29yZD0nYWRtaW4xMjMnJnVuaXF1ZT0xNzM4MTE3NDAx'),
+(2, 'manager', 'manager456', 'Manager', '', ''),
+(3, 'sales', 'sales789', 'Sales Representative', '', '');
 
 --
 -- Индексы сохранённых таблиц
@@ -134,8 +149,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`) VALUES
 -- Индексы таблицы `clients`
 --
 ALTER TABLE `clients`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `orders`
@@ -173,31 +187,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
