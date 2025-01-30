@@ -49,18 +49,21 @@ AuthCheck('', 'login.php');
             <div class="container">
                 <form action="" class="main__form">
                     <label for="search">Поиск по названию</label>
-                    <input type="text" id="search" name="search" placeholder="Введите название" required>
+                    <input type="text" id="search" name="search" placeholder="Введите название" >
                     <label for="search">Сортировка по </label>
-                    <select name="sort" id="sort">
-                        <option value="0">Названию</option>
-                        <option value="1">Цене</option>
-                        <option value="2">Количеству</option>
+                    <select name="search_name" id="sort">
+                        <option value="name">Названию</option>
+                        <option value="price">Цене</option>
+                        <option value="stock">Количеству</option>
                     </select>
                     <label for="search">Сортировать </label>
                     <select name="sort" id="sort">
-                        <option value="0">По возрастанию</option>
-                        <option value="1">По убыванию</option>
+                        <option value="">По умолчанию</option>
+                        <option value="ASC">По возрастанию</option>
+                        <option value="DESC">По убыванию</option>
                     </select>
+                    <button type="submit">Поиск</button>
+                    <a class="search" href="?" >Сбросить</a>
                 </form>
             </div>
         </section>
@@ -81,7 +84,14 @@ AuthCheck('', 'login.php');
                         <th>Создать qr</th>
                     </thead>
                     <tbody>
-                        <tr>
+                    <?php
+                        require 'api/DB.php';
+                        require_once 'api/products/OutputProducts.php';
+                        require_once 'api/products/ProductsSearch.php';
+                        $products = ProductsSearch($_GET,$db);
+                        OutputProducts($products);
+                        ?>
+                        <!-- <tr>
                             <td>0</td>
                             <td>Футболка</td>
                             <td>Красная</td>
@@ -92,17 +102,7 @@ AuthCheck('', 'login.php');
                             <td onclick="MicroModal.show('delete-modal')"><i class="fa fa-trash" aria-hidden="true"></i>
                             </td>
                             <td><i class="fa fa-qrcode" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Футболка</td>
-                            <td>Синяя</td>
-                            <td>1000.00</td>
-                            <td>100</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                            <td><i class="fa fa-qrcode" aria-hidden="true"></i></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>

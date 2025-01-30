@@ -95,9 +95,11 @@ main {
     cursor: pointer;
     margin-top: 15px;
 }
+
 .filters button:hover{
     background-color: #318534;
 }
+
 /* Стили для таблицы */
 .clients {
     margin-top: 60px; /* Отступ сверху для секции клиентов */

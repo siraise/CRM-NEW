@@ -48,9 +48,9 @@ AuthCheck('', 'login.php');
                 <form action="" class="main__form">
 
                     <label for="search">Поиск по названию</label>
-                    <input type="text" id="search" name="search" placeholder="Введите название" required>
+                    <input type="text" id="search" name="search" placeholder="Введите название" >
                     <label for="search">Сортировка по </label>
-                    <select name="sort" id="sort">
+                    <select name="search_name" id="sort">
                         <option value="0">Клиент</option>
                         <option value="1">Ид</option>
                         <option value="2">Дата</option>
@@ -58,10 +58,12 @@ AuthCheck('', 'login.php');
                     </select>
                     <label for="search">Сортировать </label>
                     <select name="sort" id="sort">
-                        <option value="0">По возрастанию</option>
-                        <option value="1">По убыванию</option>
+                        <option value="">По умолчанию</option>
+                        <option value="ASC">По возрастанию</option>
+                        <option value="DESC">По убыванию</option>
                     </select>
-
+                    <button type="submit">Поиск</button>
+                    <a class="search" href="?" >Сбросить</a>
                 </form>
             </div>
         </section>

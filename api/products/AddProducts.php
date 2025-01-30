@@ -3,10 +3,10 @@ require_once '../DB.php';
 if ($_SERVER['REQUEST_METHOD']==='POST'){
     $formData = $_POST;
 
-    $fields = ['full-name','email','phone','birth-date'];
+    $fields = ['name','desc','price','stock'];
     $errors = [];
 
-    $_SESSION['clients-errors']='';
+    $_SESSION['products-errors']='';
 
     foreach($fields as $key => $field){
         if(!isset($_POST[$field]) || empty($_POST[$field])){
@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
             $errorMessages = $errorMessages . "<li>$key : $to_string </li>";
         }
         $errorMessages = $errorMessages . '</ul>';
-        $_SESSION['clients-errors'] = $errorMessages;
-        header('Location: ../../clients.php');
+        $_SESSION['products-errors'] = $errorMessages;
+        header('Location: ../../products.php');
         exit;
     }
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
 
     $phone = $formData['phone'];
     $userID= $db->query("
-        SELECT id FROM clients WHERE phone='$phone'
+        SELECT id FROM products WHERE phone='$phone'
         ")->fetchAll();
     if (!empty($userID)) {
         // Добавляем ошибку в массив ошибок
@@ -47,19 +47,19 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
             $to_string = implode(',', $error);
             $errorMessages .= "$to_string";
         }
-        $_SESSION['clients-errors'] = $errorMessages;
-        header('Location: ../../clients.php');
+        $_SESSION['products-errors'] = $errorMessages;
+        header('Location: ../../products.php');
         exit;
     }else{
         $db->prepare(
-                "INSERT INTO `clients` (`name`, `email`, `phone`, `birthday`) VALUES (?, ?, ?, ?)"
+                "INSERT INTO `products` (`name`, `description`, `price`, `stock`) VALUES (?, ?, ?, ?)"
             )->execute([
-                $formData['full-name'], 
-                $formData['email'], 
-                $formData['phone'], 
-                $formData['birth-date']
+                $formData['name'], 
+                $formData['desc'], 
+                $formData['price'], 
+                $formData['stock']
             ]);
-        header('Location: ../../clients.php');    
+        header('Location: ../../products.php');    
     }
 
 }else{

@@ -57,7 +57,7 @@ AuthCheck('', 'login.php');
                         <option value="DESC">По убыванию</option>
                     </select>
                     <button type="submit">Поиск</button>
-                    <a href="?" >Сбросить</a>
+                    <a class="search" href="?" >Сбросить</a>
                 </form>
             </div>
         </section>
