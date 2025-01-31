@@ -217,6 +217,7 @@ AuthCheck('', 'login.php');
             </div>
         </div>
     </div>
+    
     <div class="modal micromodal-slide <?php
     //проверить $_SESSION['clients-errors']
     //на существование и пустоту

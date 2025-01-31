@@ -16,7 +16,7 @@ function OutputProducts($products){
         <td>$price</td>
         <td>$stock</td>
         <td onclick='MicroModal.show(\"edit-modal\")'><i class='fa fa-pencil' aria-hidden='true'></i></td>
-        <td onclick='MicroModal.show(\"delete-modal\")'><i class='fa fa-trash' aria-hidden='true'></i></td>
+        <td><a href='api/products/DeleteProduct.php?id=$id'><i class='fa fa-trash' aria-hidden='true'></i></a></td>
         <td><i class='fa fa-qrcode' aria-hidden='true'></i></td>
         </tr>";
 }}

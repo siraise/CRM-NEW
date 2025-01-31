@@ -38,7 +38,7 @@ AuthCheck('', 'login.php');
                 <li><a href="products.php">Товары</a></li>
                 <li><a href="orders.php">Заказы</a></li>
             </ul>
-            <a class="header_login" href="login.html">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <a class="header_login" href="?do=logout">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
             </a>
         </div>
     </header>
@@ -78,16 +78,29 @@ AuthCheck('', 'login.php');
                         <th>ФИО клиента</th>
                         <th>Дата заказа</th>
                         <th>Цена</th>
-                        <th>Название</th>
-                        <th>Количестко</th>
-                        <th>Общая цена</th>
+                        <th>Инфор. о заказе</th>
                         <th>Редактировать</th>
                         <th>Удалить</th>
                         <th>Генерация чека</th>
                         <th>Подробности</th>
                     </thead>
                     <tbody>
-                        <tr>
+                    <?php
+                        require 'api/DB.php';
+                        require_once 'api/orders/OutputOrders.php';
+                        // require_once 'api/clients/ClientsSearch.php';
+                        $orders = $db->query(
+                             "SELECT orders.id , clients.name , orders.order_date , orders.total , GROUP_CONCAT(products.name SEPARATOR ', ') AS product_names 
+                             FROM orders 
+                             JOIN clients ON orders.client_id = clients.id 
+                             JOIN order_items ON orders.id = order_items.order_id 
+                             JOIN products ON order_items.product_id = products.id 
+                             GROUP BY  orders.id , clients.name , orders.order_date , orders.total
+                        ")->fetchAll();
+                        // $clients = ClientsSearch($_GET,$db);
+                        OutputOrders($orders);
+                        ?>
+                        <!-- <tr>
                             <td>0</td>
                             <td>Футболка</td>
                             <td>2024-01-12 15:20:22</td>
@@ -101,8 +114,7 @@ AuthCheck('', 'login.php');
                             </td>
                             <td><i class="fa fa-qrcode" aria-hidden="true"></i></td>
                             <td onclick="MicroModal.show('history-modal')"><i class="fa fa-info-circle" aria-hidden="true"></i></td>
-
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>

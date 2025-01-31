@@ -40,7 +40,7 @@ AuthCheck('', 'login.php');
                 <li><a href="products.php">Товары</a></li>
                 <li><a href="orders.php">Заказы</a></li>
             </ul>
-            <a class="header_login" href="login.html">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <a class="header_login" href="?do=logout">Выйти <i class="fa fa-sign-out" aria-hidden="true"></i>
             </a>
         </div>
     </header>
@@ -119,18 +119,18 @@ AuthCheck('', 'login.php');
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <main class="modal__content" id="modal-1-content">
-                    <form id="registration-form">
+                    <form action="api/products/AddProducts.php" method="POST" id="registration-form">
                         <label for="name">Название:</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name">
 
                         <label for="desc">Описание:</label>
-                        <input type="desc" id="desc" name="desc" required>
+                        <input type="desc" id="desc" name="description">
 
                         <label for="price">Цена:</label>
-                        <input type="price" id="price" name="price" required>
+                        <input type="price" id="price" name="price">
 
                         <label for="stock">Количество:</label>
-                        <input type="stock" id="stock" name="stock" required>
+                        <input type="stock" id="stock" name="stock">
 
                         <button class="create" type="submit">Создать</button>
                         <button onclick="MicroModal.close('add-modal')" class="cancel" type="button">Отмена</button>
@@ -185,6 +185,34 @@ AuthCheck('', 'login.php');
                         <button class="cancel" type="submit">Удалить</button>
                         <button onclick="MicroModal.close('delete-modal')" class="create" type="button">Отмена</button>
                     </form>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal micromodal-slide <?php
+    //проверить $_SESSION['clients-errors']
+    //на существование и пустоту
+    //существует и не пустой  echo 'open'
+    if (isset($_SESSION['products-errors']) && !empty($_SESSION['products-errors'])) {
+        echo 'open';
+    }
+    ?>" id="error-modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-1-title">
+                        Ошибка
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <main class="modal__content" id="modal-1-content">
+                    <?php
+                    if (isset($_SESSION['products-errors']) && !empty($_SESSION['products-errors'])) {
+                        echo $_SESSION['products-errors'];
+                        $_SESSION['products-errors']="";
+                    }
+                    ?>
                 </main>
             </div>
         </div>
