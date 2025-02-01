@@ -51,10 +51,10 @@ AuthCheck('', 'login.php');
                     <input type="text" id="search" name="search" placeholder="Введите название" >
                     <label for="search">Сортировка по </label>
                     <select name="search_name" id="sort">
-                        <option value="0">Клиент</option>
-                        <option value="1">Ид</option>
-                        <option value="2">Дата</option>
-                        <option value="3">Сумма</option>
+                        <option value="clients.name">Клиент</option>
+                        <option value="orders.id">Ид</option>
+                        <option value="orders.order_date">Дата</option>
+                        <option value="orders.total">Сумма</option>
                     </select>
                     <label for="search">Сортировать </label>
                     <select name="sort" id="sort">
@@ -79,25 +79,26 @@ AuthCheck('', 'login.php');
                         <th>Дата заказа</th>
                         <th>Цена</th>
                         <th>Инфор. о заказе</th>
-                        <th>Редактировать</th>
+                        <th>Редак.</th>
                         <th>Удалить</th>
-                        <th>Генерация чека</th>
-                        <th>Подробности</th>
+                        <th>Ген. чека</th>
+                        <th>Подр.</th>
                     </thead>
                     <tbody>
                     <?php
                         require 'api/DB.php';
                         require_once 'api/orders/OutputOrders.php';
-                        // require_once 'api/clients/ClientsSearch.php';
+                        require_once 'api/clients/ClientsSearch.php';
                         $orders = $db->query(
-                             "SELECT orders.id , clients.name , orders.order_date , orders.total , GROUP_CONCAT(products.name SEPARATOR ', ') AS product_names 
-                             FROM orders 
-                             JOIN clients ON orders.client_id = clients.id 
-                             JOIN order_items ON orders.id = order_items.order_id 
-                             JOIN products ON order_items.product_id = products.id 
-                             GROUP BY  orders.id , clients.name , orders.order_date , orders.total
+                             "SELECT orders.id, clients.name, orders.order_date, orders.total, 
+                                GROUP_CONCAT(CONCAT(products.name, ' : ', order_items.price, ' : ', order_items.quantity, ' кол.') SEPARATOR ', ') AS product_names
+                                FROM orders 
+                                JOIN clients ON orders.client_id = clients.id 
+                                JOIN order_items ON orders.id = order_items.order_id 
+                                JOIN products ON order_items.product_id = products.id 
+                                GROUP BY  orders.id, clients.name, orders.order_date, orders.total
                         ")->fetchAll();
-                        // $clients = ClientsSearch($_GET,$db);
+                        $orders = OrdersSearch($_GET,$db);
                         OutputOrders($orders);
                         ?>
                         <!-- <tr>

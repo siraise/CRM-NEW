@@ -9,6 +9,10 @@ function OutputOrders($orders){
         $total = $order['total'];
         $product_names = $order['product_names'];
 
+        $product_names = str_replace(',', '<br/>', $product_names);
+
+        $order_date=convertDateTime($order_date);
+
         echo "<tr>
         <td>$id</td>
         <td>$client_name</td>
