@@ -7,7 +7,6 @@ function OrdersSearch($params, $db){
     if ($sort) { 
         $sort = "ORDER BY $search_name $sort";
     } 
-    echo $sort;
     $search = trim(strtolower($search));
 
         $orders = $db->query(
@@ -16,12 +15,11 @@ function OrdersSearch($params, $db){
             FROM orders 
             JOIN clients ON orders.client_id = clients.id 
             JOIN order_items ON orders.id = order_items.order_id 
-            JOIN products ON order_items.product_id = products.id 
+            JOIN products ON order_items.product_id = products.id WHERE LOWER(clients.name) LIKE '%$search%' OR LOWER(products.name) LIKE '%$search%' 
             GROUP BY orders.id, clients.name, orders.order_date, orders.total 
             $sort
             ")->fetchAll();
    
-
     return $orders;
 }
 ?>

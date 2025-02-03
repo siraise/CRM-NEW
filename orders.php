@@ -88,16 +88,16 @@ AuthCheck('', 'login.php');
                     <?php
                         require 'api/DB.php';
                         require_once 'api/orders/OutputOrders.php';
-                        require_once 'api/clients/ClientsSearch.php';
-                        $orders = $db->query(
-                             "SELECT orders.id, clients.name, orders.order_date, orders.total, 
-                                GROUP_CONCAT(CONCAT(products.name, ' : ', order_items.price, ' : ', order_items.quantity, ' кол.') SEPARATOR ', ') AS product_names
-                                FROM orders 
-                                JOIN clients ON orders.client_id = clients.id 
-                                JOIN order_items ON orders.id = order_items.order_id 
-                                JOIN products ON order_items.product_id = products.id 
-                                GROUP BY  orders.id, clients.name, orders.order_date, orders.total
-                        ")->fetchAll();
+                        require_once 'api/orders/OrdersSearch.php';
+                        // $orders = $db->query(
+                        //      "SELECT orders.id, clients.name, orders.order_date, orders.total, 
+                        //         GROUP_CONCAT(CONCAT(products.name, ' : ', order_items.price, ' : ', order_items.quantity, ' кол.') SEPARATOR ', ') AS product_names
+                        //         FROM orders 
+                        //         JOIN clients ON orders.client_id = clients.id 
+                        //         JOIN order_items ON orders.id = order_items.order_id 
+                        //         JOIN products ON order_items.product_id = products.id 
+                        //         GROUP BY  orders.id, clients.name, orders.order_date, orders.total
+                        // ")->fetchAll();
                         $orders = OrdersSearch($_GET,$db);
                         OutputOrders($orders);
                         ?>
@@ -127,23 +127,38 @@ AuthCheck('', 'login.php');
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
                     <h2 class="modal__title" id="modal-1-title">
-                        Добавить заказ
+                        Создание заказа
                     </h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <main class="modal__content" id="modal-1-content">
-                    <form id="registration-form">
+                    <form action="api/orders/AddOrders.php" method="POST" id="registration-form">
                         <label for="name">ФИО клиента:</label>
-                        <input type="text" id="name" name="name" required>
+                        <select class="main-select" name="client" id="name">
+                            <?php 
+                            $clients = $db->query("SELECT id, name FROM clients")->fetchAll();
+                            foreach($clients as $key => $client){
 
-                        <label for="desc">Дата заказа:</label>
-                        <input type="desc" id="desc" name="desc" required>
+                                $id = $client['id'];
+                                $name =  $client['name'];
+                                echo "<option value='$id'>$name</option>";
+                            }
+                            ?>
+                            </select>
+                        <label for="products">Товар:</label>
+                        <select class="main-select" name="products" id="products" multiple>
+                        <?php 
+                            $products = $db->query("SELECT id, name, price, stock FROM products")->fetchAll();
+                            foreach($products as $key => $product){
 
-                        <label for="price">Цена:</label>
-                        <input type="price" id="price" name="price" required>
-
-                        <label for="stock">Количество:</label>
-                        <input type="stock" id="stock" name="stock" required>
+                                $id = $product['id'];
+                                $name =  $product['name'];
+                                $price = $product['price'];
+                                $stock = $product['stock'];
+                                echo "<option value='$id'>$name : $price\$ : $stock шт.</option>";
+                            }
+                            ?>
+                            </select>
 
                         <button class="create" type="submit">Создать</button>
                         <button onclick="MicroModal.close('add-modal')" class="cancel" type="button">Отмена</button>
@@ -247,6 +262,32 @@ AuthCheck('', 'login.php');
             </div>
         </div>
     </div>
+    <div class="modal micromodal-slide <?php
+    //проверить $_SESSION['orders-errors']
+    //на существование и пустоту
+    //существует и не пустой  echo 'open'
+    if (isset($_SESSION['orders-errors']) && !empty($_SESSION['orders-errors'])) {
+        echo 'open';
+    }
+    ?>" id="error-modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-1-title">
+                        Ошибка
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <main class="modal__content" id="modal-1-content">
+                    <?php
+                    if (isset($_SESSION['orders-errors']) && !empty($_SESSION['orders-errors'])) {
+                        echo $_SESSION['orders-errors'];
+                        $_SESSION['orders-errors']="";
+                    }
+                    ?>
+                </main>
+            </div>
+        </div>
     <script defer src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
     <script defer src="scripts/initClientsModal.js"></script>
 </body>
