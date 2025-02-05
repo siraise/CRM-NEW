@@ -146,7 +146,7 @@ AuthCheck('', 'login.php');
                             ?>
                             </select>
                         <label for="products">Товар:</label>
-                        <select class="main-select" name="products" id="products" multiple>
+                        <select class="main-select" name="products[]" id="products" multiple>
                         <?php 
                             $products = $db->query("SELECT id, name, price, stock FROM products")->fetchAll();
                             foreach($products as $key => $product){

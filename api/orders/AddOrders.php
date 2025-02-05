@@ -26,6 +26,36 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
         exit;
     }
 
+    $total = $db->query("SELECT SUM(price) FROM products 
+    WHERE id IN (" . implode(',', $formData['products']) . ")")->fetchColumn();
+
+    $orders = [
+        'id' => time(),
+        'client_id' => $formData['client'],
+        'total' => $total
+    ];
+
+
+    $db->prepare(
+        "INSERT INTO `orders` (`id`, `client_id`, `total`) VALUES (?, ?, ?)"
+    )->execute([
+        $orders['id'],
+        $orders['client_id'], 
+        $orders['total']
+    ]);
+    // записать элементы заказа в orders_items order_id, product_id, quantity=1, price=цена продукта
+    foreach ($formData['products'] as $key => $product) {
+        $db->prepare(
+            "INSERT INTO `order_items` (`order_id`, `product_id`, `quantity`, `price`) VALUES (?, ?, ?, ?)"
+        )->execute([
+            $orders['id'],
+            $product,
+            1,
+            $db->query("SELECT price FROM products WHERE id = $product")->fetchColumn(),
+        ]);
+    }
+
+    header('Location: ../../orders.php');
 
 }else{
     echo json_encode(
