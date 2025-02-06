@@ -49,12 +49,13 @@ AuthCheck('', 'login.php');
 
                     <label for="search">Поиск по названию</label>
                     <input type="text" id="search" name="search" placeholder="Введите название" >
-                    <label for="search">Сортировка по </label>
+                    <label for="search">Сортировка</label>
                     <select name="search_name" id="sort">
-                        <option value="clients.name">Клиент</option>
-                        <option value="orders.id">Ид</option>
-                        <option value="orders.order_date">Дата</option>
-                        <option value="orders.total">Сумма</option>
+                        <option value="clients.name">По клиенту</option>
+                        <option value="orders.id">По Ид</option>
+                        <option value="orders.order_date">По дате</option>
+                        <option value="orders.total">По сумме</option>
+                        <option value="orders.status">По статусу</option>
                     </select>
                     <label for="search">Сортировать </label>
                     <select name="sort" id="sort">
@@ -62,6 +63,10 @@ AuthCheck('', 'login.php');
                         <option value="ASC">По возрастанию</option>
                         <option value="DESC">По убыванию</option>
                     </select>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="checkbox" name="checkbox" <?php echo isset($_GET['checkbox']) ? 'checked' : ''; ?>>
+                        <label for="checkbox">Показать неактивные заказы</label>
+                    </div>
                     <button type="submit">Поиск</button>
                     <a class="search" href="?" >Сбросить</a>
                 </form>
@@ -79,6 +84,7 @@ AuthCheck('', 'login.php');
                         <th>Дата заказа</th>
                         <th>Цена</th>
                         <th>Инфор. о заказе</th>
+                        <th>Статус</th>
                         <th>Редак.</th>
                         <th>Удалить</th>
                         <th>Ген. чека</th>

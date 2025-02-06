@@ -8,6 +8,14 @@ function OutputOrders($orders){
         $order_date = $order['order_date'];
         $total = $order['total'];
         $product_names = $order['product_names'];
+        $status = '';
+
+        if($order['status']==='0'){
+            $status='Не активен';
+        }else{
+            $status='Активен';
+        }
+
 
         $product_names = str_replace(',', '<br/>', $product_names);
 
@@ -19,6 +27,7 @@ function OutputOrders($orders){
         <td>$order_date</td>
         <td>$total</td>
         <td>$product_names</td>
+        <td>$status</td>
         <td onclick='MicroModal.show(\"edit-modal\")'><i class='fa fa-pencil' aria-hidden='true'></i></td>
         <td><a href='api/orders/DeleteOrder.php?id=$id'><i class='fa fa-trash' aria-hidden='true'></i></a></td>
         <td><i class='fa fa-qrcode' aria-hidden='true'></i></td>

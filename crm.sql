@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Фев 01 2025 г., 04:13
--- Версия сервера: 10.4.32-MariaDB
--- Версия PHP: 8.2.12
+-- Время создания: Фев 06 2025 г., 11:16
+-- Версия сервера: 10.4.28-MariaDB
+-- Версия PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -57,7 +57,7 @@ CREATE TABLE `orders` (
   `client_id` int(11) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `total` decimal(10,2) DEFAULT NULL,
-  `status` enum('pending','completed','canceled') DEFAULT 'pending'
+  `status` enum('1','0') DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -65,9 +65,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `client_id`, `order_date`, `total`, `status`) VALUES
-(1, 1, '2025-01-13 09:25:36', 300.00, 'completed'),
-(2, 2, '2025-01-13 09:25:36', 150.50, 'pending'),
-(3, 1, '2025-01-13 09:25:36', 200.00, 'canceled');
+(1, 1, '2025-01-13 09:25:36', 300.00, '0'),
+(2, 2, '2025-01-13 09:25:36', 150.50, '1'),
+(3, 1, '2025-01-13 09:25:36', 200.00, '0'),
+(1738836924, 3, '2025-02-06 10:15:24', 450.75, '1');
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 (1, 1, 1, 2, 100.00),
 (2, 1, 2, 1, 150.50),
 (3, 2, 3, 1, 200.00),
-(4, 3, 4, 1, 250.75);
+(4, 3, 4, 1, 250.75),
+(5, 1738836924, 3, 1, 200.00),
+(6, 1738836924, 4, 1, 250.75);
 
 -- --------------------------------------------------------
 
@@ -137,7 +140,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `surname`, `token`) VALUES
-(1, 'admin', 'admin123', 'Administrator', 'kitchen', 'bG9naW49J2FkbWluJyZwYXNzd29yZD0nYWRtaW4xMjMnJnVuaXF1ZT0xNzM4Mzc4MjU0'),
+(1, 'admin', 'admin123', 'Administrator', 'kitchen', 'bG9naW49J2FkbWluJyZwYXNzd29yZD0nYWRtaW4xMjMnJnVuaXF1ZT0xNzM4ODM2OTA2'),
 (2, 'manager', 'manager456', 'Manager', '', ''),
 (3, 'sales', 'sales789', 'Sales Representative', '', '');
 
@@ -193,13 +196,13 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1738836925;
 
 --
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
