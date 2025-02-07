@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
     $fields = ['client','products'];
     $errors = [];
 
+    
     $_SESSION['orders-errors']='';
 
     foreach($fields as $key => $field){
@@ -29,9 +30,25 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
     $total = $db->query("SELECT SUM(price) FROM products 
     WHERE id IN (" . implode(',', $formData['products']) . ")")->fetchColumn();
 
+    $clientID = $formData['client'] === 'new' ? 
+    time() :
+    $formData['client'];
+
+    if ($formData['client'] === 'new'){
+        //добавить запись клиента в бд id=$clientID, email=$formData['email'], created_at само подставится а остальные поля будут пустыми
+        $db->prepare(
+            "INSERT INTO `clients` (`id`, `name`, `email`, `phone`) VALUES (?, ?, ?, ?)"
+        )->execute([
+            $clientID,
+            'Новый клиент',
+            $formData['email'],
+            "0(000)000-00-00"
+        ]);
+    }
+
     $orders = [
         'id' => time(),
-        'client_id' => $formData['client'],
+        'client_id' => $clientID,
         'total' => $total
     ];
 

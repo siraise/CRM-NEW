@@ -9,7 +9,7 @@ if(isset($_GET['do']) && $_GET['do']==='logout'){
 }
 require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
-
+require_once 'api/helpers/inputDefaultValue.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +48,7 @@ AuthCheck('', 'login.php');
                 <form action="" class="main__form">
 
                     <label for="search">Поиск по названию</label>
-                    <input type="text" id="search" name="search" placeholder="Введите название" >
+                    <input <?php inputDefaultValue('search', ''); ?> type="text" id="search" name="search" placeholder="Введите название" >
                     <label for="search">Сортировка</label>
                     <select name="search_name" id="sort">
                         <option value="clients.name">По клиенту</option>
@@ -140,7 +140,9 @@ AuthCheck('', 'login.php');
                 <main class="modal__content" id="modal-1-content">
                     <form action="api/orders/AddOrders.php" method="POST" id="registration-form">
                         <label for="name">ФИО клиента:</label>
-                        <select class="main-select" name="client" id="name">
+                        <div class='modal_form-group'>
+                        <select class="main-select" name="client" id="client">
+                            <option value="new">Новый пользователь</option>
                             <?php 
                             $clients = $db->query("SELECT id, name FROM clients")->fetchAll();
                             foreach($clients as $key => $client){
@@ -150,7 +152,12 @@ AuthCheck('', 'login.php');
                                 echo "<option value='$id'>$name</option>";
                             }
                             ?>
-                            </select>
+                            </select> </div>
+                            <div id='email-field' class='modal_form-group'>
+                        <label for="email">Почта:</label>
+                        <input type="email" id="email" name="email" >
+                                </div>
+                                <div class='modal_form-group'>
                         <label for="products">Товар:</label>
                         <select class="main-select" name="products[]" id="products" multiple>
                         <?php 
@@ -164,7 +171,7 @@ AuthCheck('', 'login.php');
                                 echo "<option value='$id'>$name : $price\$ : $stock шт.</option>";
                             }
                             ?>
-                            </select>
+                            </select></div>
 
                         <button class="create" type="submit">Создать</button>
                         <button onclick="MicroModal.close('add-modal')" class="cancel" type="button">Отмена</button>
@@ -296,5 +303,6 @@ AuthCheck('', 'login.php');
         </div>
     <script defer src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
     <script defer src="scripts/initClientsModal.js"></script>
+    <script defer src="scripts/orders.js"></script>
 </body>
 </html>

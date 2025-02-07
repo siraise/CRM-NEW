@@ -1,10 +1,11 @@
 <?php
 function ClientsSearch($params, $db){
     $search = isset($params['search']) ? $params['search'] : '';
+    $search_name = isset($params['search_name']) ? $params['search_name'] : 'name';
     $sort = isset($params['sort']) ? $params['sort'] : '';
     
     if ($sort) {
-        $sort = "ORDER BY name $sort";
+        $sort = "ORDER BY $search_name $sort";
     } 
     
     $search = trim(strtolower($search));

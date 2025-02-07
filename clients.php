@@ -9,7 +9,7 @@ if(isset($_GET['do']) && $_GET['do']==='logout'){
 }
 require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
-
+require_once 'api/helpers/inputDefaultValue.php';
 ?>
 
 <!DOCTYPE html>
@@ -49,8 +49,13 @@ AuthCheck('', 'login.php');
             <div class="container">
                 <form action="" method="GET" class="main__form">
                     <label for="search">Поиск по имени</label>
-                    <input type="text" id="search" name="search" placeholder="Введите имя" >
-                    <label for="search">Сортировка по имени</label>
+                    <input <?php inputDefaultValue('search', ''); ?> type="text" id="search" name="search" placeholder="Введите имя" >
+                    <label for="search">Сортировка</label>
+                    <select name="search_name" id="sort">
+                        <option value="name">По имени</option>
+                        <option value="email">По почте</option>
+                    </select>
+                    <label for="search">Сортировка</label>
                     <select name="sort" id="sort">
                         <option value="">По умолчанию</option>
                         <option value="ASC">По возрастанию</option>
