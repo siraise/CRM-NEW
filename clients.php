@@ -10,7 +10,9 @@ if(isset($_GET['do']) && $_GET['do']==='logout'){
 require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
 require_once 'api/helpers/inputDefaultValue.php';
+require_once 'api/helpers/selectDefaultValue.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,18 +53,36 @@ require_once 'api/helpers/inputDefaultValue.php';
                     <label for="search">Поиск по имени</label>
                     <input <?php inputDefaultValue('search', ''); ?> type="text" id="search" name="search" placeholder="Введите имя" >
                     <label for="search">Сортировка</label>
-                    <select name="search_name" id="sort">
-                        <option value="name">По имени</option>
-                        <option value="email">По почте</option>
+                    <select  name="search_name" id="search_name">
+                        <?php $selectNameOptions = [[
+                            'key' => 'name',
+                            'value' => 'По имени'
+                        ],[
+                            'key' => 'email',
+                            'value' => 'По почте'
+                        ]];
+                        selectDefaultValue('search_name', $selectNameOptions, 'name');
+                        ?>
                     </select>
+
                     <label for="search">Сортировка</label>
-                    <select name="sort" id="sort">
-                        <option value="">По умолчанию</option>
-                        <option value="ASC">По возрастанию</option>
-                        <option value="DESC">По убыванию</option>
+                    <select  name="sort" id="sort">
+                        <?php $selectSortOptions = [[
+                            'key' => '',
+                            'value' => 'По умолчанию'
+                        ],[
+                            'key' => 'ASC',
+                            'value' => 'По возрастанию'
+                        ],[
+                            'key' => 'DESC',
+                            'value' => 'По убыванию'
+                        ]];
+                        selectDefaultValue('sort', $selectSortOptions, '');
+                        ?>
                     </select>
                     <button type="submit">Поиск</button>
                     <a class="search" href="?" >Сбросить</a>
+
                 </form>
             </div>
         </section>
