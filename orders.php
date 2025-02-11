@@ -10,6 +10,7 @@ if(isset($_GET['do']) && $_GET['do']==='logout'){
 require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
 require_once 'api/helpers/inputDefaultValue.php';
+require_once 'api/helpers/selectDefaultValue.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,17 +52,39 @@ require_once 'api/helpers/inputDefaultValue.php';
                     <input <?php inputDefaultValue('search', ''); ?> type="text" id="search" name="search" placeholder="Введите название" >
                     <label for="search">Сортировка</label>
                     <select name="search_name" id="sort">
-                        <option value="clients.name">По клиенту</option>
-                        <option value="orders.id">По Ид</option>
-                        <option value="orders.order_date">По дате</option>
-                        <option value="orders.total">По сумме</option>
-                        <option value="orders.status">По статусу</option>
+                    <?php $selectNameOptions = [[
+                            'key' => 'clients.name',
+                            'value' => 'По клиенту'
+                        ],[
+                            'key' => 'orders.id',
+                            'value' => 'По Ид'
+                        ],[
+                            'key' => 'orders.order_date',
+                            'value' => 'По дате'
+                        ],[
+                            'key' => 'orders.total',
+                            'value' => 'По сумме'
+                        ],[
+                            'key' => 'orders.status',
+                            'value' => 'По статусу'
+                        ]];
+                        selectDefaultValue('search_name', $selectNameOptions, 'name');
+                        ?>
                     </select>
                     <label for="search">Сортировать </label>
                     <select name="sort" id="sort">
-                        <option value="">По умолчанию</option>
-                        <option value="ASC">По возрастанию</option>
-                        <option value="DESC">По убыванию</option>
+                    <?php $selectSortOptions = [[
+                            'key' => '',
+                            'value' => 'По умолчанию'
+                        ],[
+                            'key' => 'ASC',
+                            'value' => 'По возрастанию'
+                        ],[
+                            'key' => 'DESC',
+                            'value' => 'По убыванию'
+                        ]];
+                        selectDefaultValue('sort', $selectSortOptions, '');
+                        ?>
                     </select>
                     <div class="checkbox-wrapper">
                         <input type="checkbox" id="checkbox" name="checkbox" <?php echo isset($_GET['checkbox']) ? 'checked' : ''; ?>>
