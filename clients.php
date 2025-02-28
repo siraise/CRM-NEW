@@ -11,6 +11,9 @@ require_once 'api/auth/AuthCheck.php';
 AuthCheck('', 'login.php');
 require_once 'api/helpers/inputDefaultValue.php';
 require_once 'api/helpers/selectDefaultValue.php';
+require_once 'api/clients/ClientsSearch.php';
+
+
 ?>
 
 
@@ -34,8 +37,7 @@ require_once 'api/helpers/selectDefaultValue.php';
                 <?php
                 require 'api/DB.php';
                 require_once 'api/clients/AdminName.php';
-                echo AdminName($_SESSION['token'], $db);
-            
+                echo AdminName($_SESSION['token'], $db);  
             ?></p>
             <ul class="header_link">
                 <li><a href="clients.php">Клиенты</a></li>
@@ -90,6 +92,68 @@ require_once 'api/helpers/selectDefaultValue.php';
             <h2 class="clients_title">Список клиентов</h2>
             <button onclick="MicroModal.show('add-modal')" class="clients_add"><i class="fa fa-plus-square fa-2x"
                     aria-hidden="true"></i></button>
+                    <?php
+                    $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    $maxClients = 5;
+
+                    $countClients = $db->query("
+                    SELECT COUNT(*) as count FROM clients")
+                    ->fetchAll()[0]['count'];
+
+                    $maxPage = ceil($countClients / $maxClients);
+                    $minPage = 1;
+                    $searchParams = '';
+                    if (isset($_GET['search_name'])) {
+                        $searchParams .= '&search_name=' . urlencode($_GET['search_name']);
+                    }
+                    if (isset($_GET['search'])) {
+                        $searchParams .= '&search=' . urlencode($_GET['search']);
+                    }
+                    if (isset($_GET['sort'])) {
+                        $searchParams .= '&sort=' . urlencode($_GET['sort']);
+                    }
+
+                    // Ensure currentPage is within valid range
+                    if ($currentPage < $minPage) $currentPage = $minPage;
+                    if ($currentPage > $maxPage) $currentPage = $maxPage;
+
+                      // Normalize currentPage
+                      if ($currentPage < $minPage || !is_numeric($currentPage)) {
+                        $currentPage = $minPage;
+                        // Redirect to normalized URL
+                        header("Location: ?page=$currentPage");
+                        // Redirect to normalized URL with preserved parameters
+                        header("Location: ?page=$currentPage" . $searchParams);
+                        exit;
+                    }
+                    if ($currentPage > $maxPage) {
+                        $currentPage = $maxPage;
+                        // Redirect to normalized URL
+                        header("Location: ?page=$currentPage");
+                        // Redirect to normalized URL with preserved parameters
+                        header("Location: ?page=$currentPage" . $searchParams);
+                        exit;
+                    }
+                    // echo "<p>$currentPage / $maxPage</p>";
+                    
+                    // Отоюазить кнопки пагинации
+                    for($i=1; $i <= $maxPage; $i++){
+                        $activeStyle = ($i == $currentPage) ? 'background-color: #4CAF50; color: white;' : 'background-color: #f1f1f1; color: #333;';
+                        echo"<a style='padding: 5px 10px; margin: 0 2px; border: 1px solid #ccc; border-radius: 3px; text-decoration: none; $activeStyle' href='?page=$i$searchParams'>$i</a>";
+                    }
+                   // Show prev button only if not on first page
+                   if ($currentPage > $minPage) {
+                    $Prev = $currentPage - 1;
+                    echo "<a href='?page=$Prev'><i class='fa fa-arrow-left' aria-hidden='true'></i></a>";
+                    echo "<a href='?page=$Prev" . $searchParams . "'></a>";
+                }
+
+                // Show next button only if not on last page
+                if ($currentPage < $maxPage) {
+                    $Next = $currentPage + 1;
+                    echo "<a href='?page=$Next" . $searchParams . "'><i class='fa fa-arrow-right' aria-hidden='true'></i></a>";
+                }
+                ?>
             <div class="container">
                 <table>
                     <thead>
